@@ -2,6 +2,8 @@
 
 Jesko Jets is a high-end, animated landing page designed for a private aviation operator. It offers a seamless and visually stunning journey through the world of luxury travel, leveraging advanced scroll-based animations to create a premium digital experience.
 
+<img width="1920" height="1080" alt="Screenshot (250)" src="https://github.com/user-attachments/assets/3ceb8b9c-525f-4a2b-b1b5-8b81a4e0b5fc" />
+
 ---
 
 ## ✨ Key Features
@@ -51,7 +53,7 @@ src/
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Thakuma07/JeskoJets-ScrollAnimation.git
    cd jesko-jets-animated-main
    ```
 
