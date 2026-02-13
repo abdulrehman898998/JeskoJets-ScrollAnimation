@@ -24,7 +24,8 @@ const HowWeWork = ({ progress = 0 }) => {
 
         // 1. Move the List Up
         // Total distance: List Height - Window Height
-        const totalDist = listRef.current.scrollHeight - window.innerHeight + 200;
+        // Total distance: List Height - Window Height + buffer to center last item
+        const totalDist = listRef.current.scrollHeight - window.innerHeight + (window.innerHeight * 0.8);
         const yPos = -totalDist * progress;
 
         gsap.to(listRef.current, {
@@ -65,7 +66,7 @@ const HowWeWork = ({ progress = 0 }) => {
 
             {/* RIGHT: Scrolling List (Restored Card Styles) */}
             <div className="w-1/2 h-full relative z-10">
-                <div ref={listRef} className="absolute top-[20%] left-0 w-full flex flex-col gap-[30vh] px-10 md:px-20">
+                <div ref={listRef} className="absolute top-[25%] left-0 w-full flex flex-col gap-[8vh] px-10 md:px-20">
                     {steps.map((step, i) => {
                         // Highlight logic primarily visual
                         const isActive = (progress * 4) > i && (progress * 4) < (i + 1.5);
@@ -73,12 +74,12 @@ const HowWeWork = ({ progress = 0 }) => {
                         return (
                             <div
                                 key={step.id}
-                                className={`transition-all duration-500 p-8 rounded-xl backdrop-blur-md border border-white/10 flex flex-col gap-4 text-left ${isActive ? "bg-white/10 border-lime-400 shadow-[0_0_30px_rgba(132,204,22,0.3)] scale-105" : "bg-white/5 opacity-50"}`}
+                                className={`transition-all duration-500 p-8 rounded-xl backdrop-blur-md border border-white/10 flex flex-col gap-4 text-left ${isActive ? "bg-black/40 border-lime-400 shadow-[0_0_30px_rgba(132,204,22,0.3)] scale-105" : "bg-black/20 opacity-80"}`}
                             >
                                 <span className={`font-mono text-xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] transition-colors duration-300 ${isActive ? "text-lime-300" : "text-lime-300/70"}`}>
                                     Step {step.id}
                                 </span>
-                                <h3 className="text-5xl font-bold text-white mb-2 drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">{step.title}</h3>
+                                <h3 className="text-4xl font-bold text-white mb-2 drop-shadow-[0_4px_8px_rgba(0,0,0,0.6)]">{step.title}</h3>
                                 <p className="text-xl text-white/90 leading-relaxed font-light drop-shadow-[0_2px_6px_rgba(0,0,0,0.4)]">
                                     {step.desc}
                                 </p>

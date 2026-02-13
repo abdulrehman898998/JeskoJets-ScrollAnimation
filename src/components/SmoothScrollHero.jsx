@@ -48,15 +48,36 @@ const SmoothScrollHero = () => {
     const [teamProgress, setTeamProgress] = useState(0);
     const [aboutActive, setAboutActive] = useState(false);
 
-    // Initial Reveal
+    // Loading State
+    const [isLoading, setIsLoading] = useState(true);
+    const [showLoader, setShowLoader] = useState(true);
+
+    // Initial Reveal & Loading
     useEffect(() => {
         if ('scrollRestoration' in window.history) {
             window.history.scrollRestoration = 'manual';
         }
         window.scrollTo(0, 0);
+
+        // Simulate asset loading check or just a safe timeout to ensure DOM is ready
+        const timer = setTimeout(() => {
+            setIsLoading(false); // Start the app logic
+
+            // Fade out the loader
+            gsap.to(".loader-overlay", {
+                opacity: 0,
+                duration: 1.5,
+                ease: "power2.inOut",
+                onComplete: () => setShowLoader(false)
+            });
+        }, 1500); // 1.5s load time
+
+        return () => clearTimeout(timer);
     }, []);
 
     useGSAP(() => {
+        if (isLoading) return; // Don't run GSAP until loaded
+
         // 0. Cloud Animation (Continuous)
         gsap.to(cloudsRef.current, {
             xPercent: -50,
@@ -89,10 +110,10 @@ const SmoothScrollHero = () => {
         tl.to(heroWindowRef.current, { scale: 5, rotation: 0.1, duration: 1.5, ease: "power2.in" }, 0)
             .to(heroTextRef.current, { opacity: 0, scale: 1.1, duration: 1 }, 0)
             .to(".scroll-indicator", { opacity: 0, duration: 0.5 }, 0)
-            // Move Logo Up and Scale Down
+            // Move Logo Up and Scale Down (Removed mix-blend-difference via CSS below)
             .to(logoRef.current, { top: "5%", y: 0, scale: 0.4, duration: 1.5, ease: "power2.inOut" }, 0);
 
-        // PHASE 2: ABOUT SECTION (15% -> 35%)
+        // PHASE 2: ABOUT SECTION (Starts 2, Ends 6)
         tl.fromTo(aboutRef.current,
             { opacity: 0, pointerEvents: "none" },
             {
@@ -108,44 +129,60 @@ const SmoothScrollHero = () => {
                 duration: 1,
                 onComplete: () => setAboutActive(false), // Reset when passed
                 onReverseStart: () => setAboutActive(true) // Re-activate when scrolling back up
-            }, 4);
+            }, 5); // Exits 5-6
 
-        // PHASE 3: HOW WE WORK (35% -> 65%)
+        // PHASE 3: HOW WE WORK (Starts 5, Ends 15)
         tl.fromTo(howWeWorkRef.current,
             { opacity: 0, pointerEvents: "none" },
-            { opacity: 1, pointerEvents: "auto", duration: 0.5 }, 4.5)
+            { opacity: 1, pointerEvents: "auto", duration: 1 }, 5) // Enters 5-6 (Crossfade with About)
             .to({}, {
-                duration: 3,
+                duration: 8,
                 onUpdate: function () { setWorkProgress(this.progress()); }
-            }, 5) // Overlaps slightly with fade in
-            .to(howWeWorkRef.current, { opacity: 0, pointerEvents: "none", duration: 0.5 }, 8);
+            }, 6)
+            .to(howWeWorkRef.current, { opacity: 0, pointerEvents: "none", duration: 1 }, 14); // Exits 14-15
 
-        // PHASE 4: TEAM (65% -> 85%)
+        // PHASE 4: TEAM (Starts 14, Ends 25)
         tl.fromTo(teamRef.current,
             { opacity: 0, pointerEvents: "none" },
-            { opacity: 1, pointerEvents: "auto", duration: 0.5 }, 8.5)
+            { opacity: 1, pointerEvents: "auto", duration: 1 }, 14) // Enters 14-15 (Crossfade with HWW)
             .to({}, {
-                duration: 2,
+                duration: 9,
                 onUpdate: function () { setTeamProgress(this.progress()); }
-            }, 9)
-            .to(teamRef.current, { opacity: 0, pointerEvents: "none", duration: 0.5 }, 11);
+            }, 15)
+            .to(teamRef.current, { opacity: 0, pointerEvents: "none", duration: 1 }, 24); // Exits 24-25
 
-        // PHASE 5: CAROUSEL (85% -> 100%)
+        // PHASE 5: CAROUSEL (Starts 24)
         tl.fromTo(carouselRef.current,
             { opacity: 0, pointerEvents: "none" },
-            { opacity: 1, pointerEvents: "auto", duration: 1 }, 11.5);
+            { opacity: 1, pointerEvents: "auto", duration: 1 }, 24); // Enters 24-25 (Crossfade with Team)
 
-    }, { scope: stageRef });
+    }, { scope: stageRef, dependencies: [isLoading] }); // Re-run when loading finishes
 
     return (
         <>
-            <div ref={scrollSpacerRef} className="absolute top-0 left-0 w-full h-[800vh] pointer-events-none z-[-1]" />
+            {/* LOADING OVERLAY - SMOOTH FADE OUT */}
+            {showLoader && (
+                <div className="loader-overlay fixed inset-0 bg-black z-[99999] flex items-center justify-center">
+                    <div className="relative w-24 h-24 md:w-32 md:h-32">
+                        {/* Golden Rotating Logo */}
+                        <Image
+                            src="/logo.png"
+                            alt="Loading..."
+                            fill
+                            className="object-contain animate-[spin_3s_linear_infinite]"
+                            priority
+                        />
+                    </div>
+                </div>
+            )}
+            {/* Scroll Spacer Increased to 2000vh for Slower Scroll */}
+            <div ref={scrollSpacerRef} className="absolute top-0 left-0 w-full h-[2000vh] pointer-events-none z-[-1]" />
 
             <div ref={stageRef} className="fixed inset-0 w-full h-screen overflow-hidden">
                 <Navbar />
 
-                {/* ROTATING LOGO (Moves from Center to Top-Center) */}
-                <div ref={logoRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] pointer-events-none mix-blend-difference">
+                {/* ROTATING LOGO (Normal Blend Mode) */}
+                <div ref={logoRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[200] pointer-events-none">
                     <div ref={logoImageRef} className="w-[160px] md:w-[200px]">
                         <Image src="/logo.png" alt="Logo" width={500} height={500} className="w-full h-auto object-contain" priority />
                     </div>
@@ -172,10 +209,10 @@ const SmoothScrollHero = () => {
                     </div>
                     <div ref={heroTextRef} className="absolute inset-0 flex items-center justify-between px-20 text-white">
                         <div className="hero-text-left max-w-md">
-                            <h1 className="text-4xl md:text-5xl lg:text-[66px] leading-tight font-bold -mt-40">We are<br />movement</h1>
+                            <h1 className="text-4xl md:text-5xl lg:text-[66px] leading-tight font-bold -mt-40 drop-shadow-2xl">We are<br />movement</h1>
                         </div>
                         <div className="hero-text-right max-w-md flex flex-col items-end">
-                            <h1 className="text-4xl md:text-5xl lg:text-[60px] font-bold leading-tight text-right mt-40">We are<br />distinction</h1>
+                            <h1 className="text-4xl md:text-5xl lg:text-[60px] font-bold leading-tight text-right mt-40 drop-shadow-2xl">We are<br />distinction</h1>
                         </div>
                     </div>
                     <div className="scroll-indicator absolute bottom-20 right-20 text-white flex items-center gap-2">
