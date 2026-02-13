@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import NavItem from "./NavbarItem";
 import Image from "next/image";
-import skyightLogo from "@/assets/images/logo.svg";
+
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -67,22 +67,23 @@ const Navbar = () => {
                     }`}
                 onClick={() => setIsOpen(false)}
             >
-                {/* Black Overlay Tint */}
-                <div className="absolute inset-0 bg-black/50" />
+                {/* Light glass overlay */}
+                <div className="absolute inset-0 bg-white/10 backdrop-blur-xl" />
 
-                {/* Sidebar Content */}
+                {/* Sidebar Content - glass panel */}
                 <div
-                    className={`absolute right-0 top-0 h-screen w-3/4 sm:w-1/2 bg-[#0a0a0a] transition-transform duration-500 ease-in-out flex flex-col px-6 pt-8 pb-10 ${isOpen ? "translate-x-0" : "translate-x-full"
+                    className={`absolute right-0 top-0 h-screen w-3/4 sm:w-1/2 bg-white/10 backdrop-blur-xl border-l border-white/20 transition-transform duration-500 ease-in-out flex flex-col px-6 pt-8 pb-10 ${isOpen ? "translate-x-0" : "translate-x-full"
                         }`}
                     onClick={(e) => e.stopPropagation()}
                 >
                     {/* Sidebar Header: Logo & Close Icon */}
                     <div className="flex items-center justify-between mb-20">
                         <Image
-                            src={skyightLogo}
+                            src="/logo.png"
                             alt="Logo"
                             width={120}
-                            className="brightness-0 invert"
+                            height={40}
+                            className="brightness-0 invert w-[120px] h-auto"
                         />
                         <button
                             onClick={() => setIsOpen(false)}

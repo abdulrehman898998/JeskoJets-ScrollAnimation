@@ -1,47 +1,139 @@
-import { Globe } from 'lucide-react'
-import React from 'react'
+"use client";
 
-const About = () => {
+import React, { useEffect, useRef } from 'react';
+import Matter from 'matter-js';
+
+const About = ({ triggerReset = false }) => {
+    const sceneRef = useRef(null);
+    const engineRef = useRef(null);
+    const renderRef = useRef(null);
+
+    // Initialization (Runs once)
+    useEffect(() => {
+        if (!sceneRef.current) return;
+
+        const { Engine, Render, World, Mouse, MouseConstraint } = Matter;
+
+        const engine = Engine.create();
+        engineRef.current = engine;
+
+        // Disable gravity initially or keeping it normal
+        engine.world.gravity.y = 1;
+
+        const render = Render.create({
+            element: sceneRef.current,
+            engine: engine,
+            options: {
+                width: window.innerWidth,
+                height: window.innerHeight,
+                wireframes: false,
+                background: 'transparent',
+                pixelRatio: window.devicePixelRatio,
+            }
+        });
+        renderRef.current = render;
+
+        // Mouse Control
+        const mouse = Mouse.create(render.canvas);
+        const mouseConstraint = MouseConstraint.create(engine, {
+            mouse: mouse,
+            constraint: {
+                stiffness: 0.2,
+                render: { visible: false }
+            }
+        });
+        Matter.Composite.add(engine.world, mouseConstraint);
+
+        // Remove scroll interference
+        mouseConstraint.mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
+        mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", mouseConstraint.mouse.mousewheel);
+
+        Render.run(render);
+        const runner = Matter.Runner.create();
+        Matter.Runner.run(runner, engine);
+
+        return () => {
+            Render.stop(render);
+            Matter.Runner.stop(runner);
+            if (render.canvas) render.canvas.remove();
+            Engine.clear(engine);
+        };
+    }, []);
+
+    // Reset Logic (Runs when triggerReset changes)
+    useEffect(() => {
+        if (!engineRef.current || !triggerReset) return;
+
+        const { Bodies, Composite } = Matter;
+        const world = engineRef.current.world;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        // Clear existing bodies (except mouse constraint)
+        const allBodies = Composite.allBodies(world);
+        Composite.remove(world, allBodies);
+
+        // Add Walls (Invisible)
+        const walls = [
+            Bodies.rectangle(-50, height / 2, 100, height * 3, { isStatic: true, render: { visible: false } }),
+            Bodies.rectangle(width + 50, height / 2, 100, height * 3, { isStatic: true, render: { visible: false } }),
+        ];
+        Composite.add(world, walls);
+
+        // Spawn "Apps" Logos
+        const techStack = [
+            { label: 'CHAT', color: '#a3e635' }, // Lime
+            { label: 'VOICE', color: '#22d3ee' }, // Cyan
+            { label: 'AUTO', color: '#f472b6' }, // Pink
+            { label: 'DATA', color: '#fbbf24' }, // Yellow
+            { label: 'WEB', color: '#ffffff' }, // White
+        ];
+
+        const logos = [];
+        for (let i = 0; i < 30; i++) {
+            const tech = techStack[Math.floor(Math.random() * techStack.length)];
+            const x = Math.random() * width * 0.8 + (width * 0.1);
+            const y = -Math.random() * 1500 - 200; // Start high up
+
+            let body;
+            // Mix of shapes
+            if (Math.random() > 0.5) {
+                body = Bodies.circle(x, y, 35, {
+                    restitution: 0.7,
+                    friction: 0.001,
+                    render: { fillStyle: tech.color }
+                });
+            } else {
+                body = Bodies.rectangle(x, y, 70, 70, {
+                    restitution: 0.5,
+                    friction: 0.001,
+                    chamfer: { radius: 12 },
+                    render: { fillStyle: tech.color }
+                });
+            }
+            logos.push(body);
+        }
+        Composite.add(world, logos);
+
+    }, [triggerReset]);
+
     return (
-        <div className="relative w-full min-h-screen">
-            {/* Content Container */}
-            <div className="relative px-4 sm:px-20 pt-20 pb-10 sm:pb-0 flex flex-col gap-10 lg:gap-0 lg:flex-row justify-between items-start">
-                {/* Top Left - Logo and EST */}
-                <div className='flex items-center gap-2 w-full lg:w-1/2'>
-                    <Globe className="w-8 sm:w-10 h-8 sm:h-10 text-white" strokeWidth={1} />
-                    <span className='italic text-white text-2xl sm:text-3xl'>Skyight</span>
-                    <div className='flex flex-col pl-8'>
-                        <p className='uppercase text-white text-[9px] tracking-tight'>by Evgeny Demidenko</p>
-                        <p className='text-white text-[9px] tracking-tight'>2013</p>
-                    </div>
-                </div>
+        <div className="w-full h-full relative flex items-center justify-center">
+            {/* Background Title - Renamed to What We Offer */}
+            <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[12vw] font-bold text-white/5 uppercase pointer-events-none select-none text-center leading-none">
+                WHAT WE<br />OFFER
+            </h1>
 
-                {/* Content Grid - 2 rows, 2 columns */}
-                <div className='grid grid-cols-2 gap-10 w-full lg:w-2/3 text-white pr-0 lg:pr-20'>
-                    <div className='flex flex-col gap-4'>
-                        <h1 className='text-base sm:text-xl tracking-tight'>Direct Access to Private Travel</h1>
-                        <span>——</span>
-                        <p className='text-[10px]'>Fly beyond boundaries with Jesko Jets. Our global operations ensure seamless, personalized travel experiences — from the first call to landing. Every journey is tailored to your comfort, privacy, and schedule.</p>
-                    </div>
-                    <div className='flex flex-col gap-4'>
-                        <h1 className='text-base sm:text-xl tracking-tight'>Your Freedom to Enjoy your Life</h1>
-                        <span>——</span>
-                        <p className='text-[10px]'>We value your time above all. Jesko Jets gives you the freedom to live, work, and relax wherever life takes you — without compromise. Every journey is thoughtfully crafted to match your pace, priorities, and purpose.</p>
-                    </div>
-                    <div className='flex flex-col gap-4'>
-                        <h1 className='text-base sm:text-xl tracking-tight'>Precision and Excellence with us</h1>
-                        <span>——</span>
-                        <p className='text-[10px]'>Each detail of your flight — from route planning to in-flight service — reflects our dedication to perfection. Our crew and fleet meet the highest global standards, ensuring reliability in every mission.</p>
-                    </div>
-                    <div className='flex flex-col gap-4'>
-                        <h1 className='text-base sm:text-xl tracking-tight'>Global Reach, Personal Touch</h1>
-                        <span>——</span>
-                        <p className='text-[10px]'>With access to destinations in over 150 countries, Jesko Jets brings the world closer to you. Our experts manage every aspect of your flight, guaranteeing a smooth and effortless journey.</p>
-                    </div>
-                </div>
+            <div className="absolute top-32 z-10 text-center max-w-3xl px-6 text-white pointer-events-none">
+                <h2 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl">Full Stack<br />Intelligence</h2>
+                <p className="text-xl text-white/90 font-light">
+                    Our proprietary models integrate seamlessly.
+                </p>
             </div>
-        </div>
-    )
-}
 
-export default About
+            <div ref={sceneRef} className="absolute inset-0 pointer-events-auto z-20" />
+        </div>
+    );
+};
+
+export default About;

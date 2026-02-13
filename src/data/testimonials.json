@@ -1,0 +1,184 @@
+[
+    {
+        "id": 1,
+        "name": "Alessandro",
+        "image": "/testimonials/alessandro.jpg",
+        "headline": "Outstanding Solar Automation",
+        "review": "Absolutely outstanding experience working with Saal! They built fully customized forms, a powerful AI agent tailored to my business, and custom dashboards. Technical expertise and attention to detail truly exceeded expectations.",
+        "verified": "Verified Client",
+        "isVideo": false
+    },
+    {
+        "id": 2,
+        "name": "Abdul Rehman",
+        "image": "/testimonials/abdul_rehman_reviewer.jpg",
+        "headline": "Scalable AI Video Systems",
+        "review": "Saal delivered a highly effective AI video automation system for our brand, enabling scalable production of AI-driven video content. The final system significantly improved our content production speed.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 3,
+        "name": "Gustavo",
+        "image": "/testimonials/gustavo.jpg",
+        "video": "/videos/testimonials/testimonial_gustavo.mp4",
+        "headline": "Elite Engineering Excellence",
+        "review": "Strategic automation insights from a veteran of major tech ecosystems. Saal's approach to complexity is world-class.",
+        "verified": "Senior Engineer (Ex-Amazon & Twitter)",
+        "isVideo": true
+    },
+    {
+        "id": 4,
+        "name": "Austin",
+        "image": "/testimonials/austin_abeyta.jpg",
+        "video": "/videos/testimonials/testimonial_austin.mp4",
+        "headline": "Content Pipeline Mastery",
+        "review": "Saal is revolutionizing creator workflows through advanced AI video automation and distribution systems.",
+        "verified": "Content Creator & YouTuber",
+        "isVideo": true
+    },
+    {
+        "id": 5,
+        "name": "Joe Fargnoli",
+        "image": "/testimonials/joe_fargnoli.jpg",
+        "headline": "Bright & Professional",
+        "review": "Saal did a great job - I was very pleased and very impressed. He is very bright and delivers a great product complete with documentation.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 6,
+        "name": "Kinnett Services",
+        "image": "/testimonials/kinnett_services.jpg",
+        "headline": "Automation Authority",
+        "review": "Saal is better at automations than I've ever seen anyone. Super smart and useful when it comes to all things tech; he's worth every penny.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 7,
+        "name": "NeurochainAI",
+        "image": "/testimonials/neurochainai.jpg",
+        "headline": "Rapid Workflow Deployment",
+        "review": "Saal was amazing. Great communication and helped us add features to the workflow to make it even better. Fast build and high quality.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 8,
+        "name": "Tim_spz",
+        "image": "/testimonials/tim_spz.jpg",
+        "headline": "Collaborative Partner",
+        "review": "Saal is exceptional—felt like building together with a friend! The result was more than expected and delivered just in time.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 9,
+        "name": "Rent94",
+        "image": "/testimonials/rent_94.jpg",
+        "headline": "Reliable Code Expertise",
+        "review": "Saal is the best man in my team. Superb professionalism, attention to detail, and code expertise. Always delivers bug-free solutions.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 10,
+        "name": "Rafael Marimon",
+        "image": "/testimonials/rafael_marimon.jpg",
+        "headline": "Outstanding Motivation",
+        "review": "Working with Saal was exceptional. His attention to detail, professionalism and motivation was outstanding. Highly recommend!",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 11,
+        "name": "Zolfikar Bazzi",
+        "image": "/testimonials/zolfikar_bazzi.jpg",
+        "headline": "Bug-Free Implementation",
+        "review": "Excellent experience with Saal. He delivered the project on time and the work was completely bug-free.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 12,
+        "name": "Arya227",
+        "image": "/testimonials/arya227.jpg",
+        "headline": "Expert & Trustable",
+        "review": "One of the best developers on Fiverr! Saal is an expert in n8n, automation, and AI — delivers quality work every time.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 13,
+        "name": "Yorick Mulder",
+        "image": "/testimonials/yorick_mulder.jpg",
+        "headline": "Pipeline Specialist",
+        "review": "Worked with Saal to help my administration with an invoice pipeline. He is a smart young man. We will work together again.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 14,
+        "name": "Karim Rabah",
+        "image": "/testimonials/karim_rabah.jpg",
+        "headline": "Outstanding Communication",
+        "review": "Great job by Saal! Excellent communication and truly outstanding work. Thank you so much!",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 15,
+        "name": "Austin Abeyta",
+        "image": "/testimonials/austin_abeyta.jpg",
+        "headline": "Beyond Technical Scope",
+        "review": "Saal is extremely knowledgeable and built above and beyond what was asked. I am very happy and excited for my project.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 16,
+        "name": "Nedelcho Sitnov",
+        "image": "/testimonials/nedelcho_sitnov.jpg",
+        "headline": "Chatbot Expert",
+        "review": "Saal truly excels in chatbot development! Professionalism and attention to detail is commendable. Swift delivery.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 17,
+        "name": "Ahsaan Henson",
+        "image": "/testimonials/ahsaan_henson.jpg",
+        "headline": "Amazing Execution",
+        "review": "Saal's done an amazing job—it was perfect. Code expertise and professional documentation were top notch.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 18,
+        "name": "Inkipinkiponki",
+        "image": "/testimonials/inkipinkiponki.jpg",
+        "headline": "5-Star Service",
+        "review": "Million stars for Saal! Good stuff, the best. Exceeded expectations and delivered exactly what was needed.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 19,
+        "name": "Jpmmarket",
+        "image": "/testimonials/jpmmarket.jpg",
+        "headline": "Efficient Delivery",
+        "review": "Saal did AWESOME work and was very efficient. Proactive communication and deep understanding of requirements.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    },
+    {
+        "id": 20,
+        "name": "Saucyml",
+        "image": "/testimonials/saucyml.jpg",
+        "headline": "Highly Responsive",
+        "review": "Excellent work by Saal. Would hire again. Quick responsiveness and deep understanding.",
+        "verified": "Verified Fiverr Client",
+        "isVideo": false
+    }
+]
